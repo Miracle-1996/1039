@@ -77,5 +77,4 @@ signed main(int argc, char** argv)
 
 /* question */
 /*
-	lower_bound(a + 1, a + n + 1, b[k]) - a
 */
