@@ -100,6 +100,4 @@ signed main(int argc, char** argv)
 
 /* question */
 /*
-	upper_bound(a + 1, a + n + 1, ed[k]) - (a + 1);
-	lower_bound(a + 1, a + n + 1, st[k]) - a;
 */
