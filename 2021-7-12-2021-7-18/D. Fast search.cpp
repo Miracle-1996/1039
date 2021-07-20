@@ -18,41 +18,40 @@ string str; int n, m, a[N], st[N], ed[N];
 template <class T> inline T &chmin(T &x, const T &y){ return x = min(x, y); }
 template <class T> inline T &chmax(T &x, const T &y){ return x = max(x, y); }
 
-int search1(int l, int r, int x)
+template <class tp> tp lower(tp l, tp r, const tp x)
 {
 	while (l + 1 < r) {
-		int mid = l + (r - l) / 2;
-		(a[mid] <= x) ? l = mid : r = mid;
-	}
-	return l;
-}
-
-int search2(int l, int r, int x)
-{
-	while (l + 1 < r) {
-		int mid = l + (r - l) / 2;
+		tp mid = l + (r - l) / 2;
 		(a[mid] >= x) ? r = mid : l = mid;
 	}
 	return r;
 }
 
-int search3(int l, int r, int x)
+template <class tp> tp upper(tp l, tp r, const tp x)
 {
-	while (l < r) {
-		int mid = l + (r - l + 1) / 2;
-		(a[mid] <= x) ? l = mid : r = mid - 1;
+	while (l + 1 < r) {
+		tp mid = l + (r - l) / 2;
+		(a[mid] <= x) ? l = mid : r = mid;
 	}
-	return (a[l] <= x) ? l : 0;
+	return l;
 }
 
-
-int search4(int l, int r, int x)
+template <class tp> tp search1(tp l, tp r, const tp x)
 {
 	while (l < r) {
-		int mid = l + (r - l) / 2;
+		tp mid = l + (r - l) / 2;
 		(a[mid] >= x) ? r = mid : l = mid + 1;
 	}
 	return (a[r] >= x) ? r : n + 1;
+}
+
+template <class tp> tp search2(tp l, tp r, const tp x)
+{
+	while (l < r) {
+		tp mid = l + (r - l + 1) / 2;
+		(a[mid] <= x) ? l = mid : r = mid - 1;
+	}
+	return (a[l] <= x) ? l : 0;
 }
 
 void solve(void)
@@ -60,9 +59,9 @@ void solve(void)
 	sort(a + 1, a + n + 1);
 	a[0] = INT_MIN; a[n + 1] = INT_MAX;
 	for (int k = 1; k <= m; ++k) {
-		// cout << search1(0, n + 1, ed[k]) - search2(0, n + 1, st[k]) + 1 << endl;
-		// cout << search3(1, n, ed[k]) - search4(1, n, st[k]) + 1 << endl;
-		int val1 = upper_bound(a + 1, a + n + 1, ed[k]) - (a + 1);
+		// cout << upper(0, n + 1, ed[k]) - lower(0, n + 1, st[k]) + 1 << endl;
+		// cout << search2(1, n, ed[k]) - search1(1, n, st[k]) + 1 << endl;
+		int val1 = upper_bound(a + 1, a + n + 1, ed[k]) - 1 - a;
 		int val2 = lower_bound(a + 1, a + n + 1, st[k]) - a;
 		cout << val1 - val2 + 1 << endl;
 	} 
@@ -88,16 +87,3 @@ signed main(int argc, char** argv)
     #endif
 	return 0;	
 } 
-// type: binary_search
-
-/* tips */
-/*
-*/
-
-/* editorial */
-/*
-*/
-
-/* question */
-/*
-*/
