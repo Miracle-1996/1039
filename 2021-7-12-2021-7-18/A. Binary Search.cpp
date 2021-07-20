@@ -18,40 +18,40 @@ string str; int n, m, a[N];
 template <class T> inline T &chmin(T &x, const T &y){ return x = min(x, y); }
 template <class T> inline T &chmax(T &x, const T &y){ return x = max(x, y); }
 
-bool search1(int l, int r, int x)
+template <class tp> bool lower(tp l, tp r, const tp x)
 {
-	while (l < r) {
-		int mid = l + (r - l + 1) / 2;
-		(a[mid] <= x) ? l = mid : r = mid - 1;
-	}
-	return (a[l] == x);
-}
-
-bool search2(int l, int r, int x)
-{
-	while (l < r) {
-		int mid = l + (r - l) / 2;
-		(a[mid] >= x) ? r = mid : l = mid + 1;
+	while (l + 1 < r) {
+		tp mid = l + (r - l) / 2;
+		(a[mid] >= x) ? r = mid : l = mid;
 	}
 	return (a[r] == x);
 }
 
-bool search3(int l, int r, int x)
+template <class tp> bool upper(tp l, tp r, const tp x)
 {
 	while (l + 1 < r) {
-		int mid = l + (r - l) / 2;
+		tp mid = l + (r - l) / 2;
 		(a[mid] <= x) ? l = mid : r = mid;
 	}
 	return (a[l] == x);
 }
 
-bool search4(int l, int r, int x)
+template <class tp> bool search1(tp l, tp r, const tp x)
 {
-	while (l + 1 < r) {
-		int mid = l + (r - l) / 2;
-		(a[mid] >= x) ? r = mid : l = mid;
+	while (l < r) {
+		tp mid = l + (r - l) / 2;
+		(a[mid] >= x) ? r = mid : l = mid + 1;
 	}
 	return (a[r] == x);
+}
+
+template <class tp> bool search2(tp l, tp r, const tp x)
+{
+	while (l < r) {
+		tp mid = l + (r - l + 1) / 2;
+		(a[mid] <= x) ? l = mid : r = mid - 1;
+	}
+	return (a[l] == x);
 }
 
 string solve(int x)
@@ -65,13 +65,13 @@ string solve(int x)
 	// bool res = binary_search(a + 1, a + n + 1, x);
 
 	/* l < r */
-	bool res = search1(1, n, x);
+	// bool res = search1(1, n, x);
 	// bool res = search2(1, n, x);
 
 	/* l + 1 < r */
-	// a[0] = INT_MIN; a[n + 1] = INT_MAX;
-	// bool res = search3(0, n + 1, x);
-	// bool res = search4(0, n + 1, x);
+	a[0] = INT_MIN; a[n + 1] = INT_MAX;
+	// bool res = lower(0, n + 1, x);
+	bool res = upper(0, n + 1, x);
 	return (res) ? "YES" : "NO";
 }
 
@@ -92,18 +92,4 @@ signed main(int argc, char** argv)
         cout << end_clock - start_clock << "ms" << endl;
     #endif
 	return 0;	
-} 
-// type: binary_search
-
-/* tips */
-/*
-	bool binary_search(a + 1, a + n + 1, x);
-*/
-
-/* editorial */
-/*
-*/
-
-/* question */
-/*
-*/
+}
