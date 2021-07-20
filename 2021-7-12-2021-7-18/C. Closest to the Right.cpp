@@ -18,19 +18,19 @@ string str; int n, m, a[N], b[N];
 template <class T> inline T &chmin(T &x, const T &y){ return x = min(x, y); }
 template <class T> inline T &chmax(T &x, const T &y){ return x = max(x, y); }
 
-int search1(int l, int r, int x)
+template <class tp> tp lower(tp l, tp r, const tp x)
 {
 	while (l + 1 < r) {
-		int mid = l + (r - l) / 2;
+		tp mid = l + (r - l) / 2;
 		(a[mid] >= x) ? r = mid : l = mid;
 	}
 	return r;
 }
 
-int search2(int l, int r, int x)
+template <class tp> tp search1(tp l, tp r, const tp x)
 {
 	while (l < r) {
-		int mid = l + (r - l) / 2;
+		tp mid = l + (r - l) / 2;
 		(a[mid] >= x) ? r = mid : l = mid + 1;
 	}
 	return (a[r] >= x) ? r : n + 1;
@@ -40,8 +40,8 @@ void solve(void)
 {
 	a[0] = INT_MIN; a[n + 1] = INT_MAX;  
 	for (int k = 1; k <= m; ++k) {
-		// cout << search1(0, n + 1, b[k]) << endl;
-		// cout << search2(1, n, b[k]) << endl;
+		// cout << lower(0, n + 1, b[k]) << endl;
+		// cout << search1(1, n, b[k]) << endl;
 		cout << lower_bound(a + 1, a + n + 1, b[k]) - a << endl;
 	} 
 }
@@ -64,17 +64,4 @@ signed main(int argc, char** argv)
         cout << end_clock - start_clock << "ms" << endl;
     #endif
 	return 0;	
-} 
-// type: binary_search
-
-/* tips */
-/*
-*/
-
-/* editorial */
-/*
-*/
-
-/* question */
-/*
-*/
+}
